@@ -9,6 +9,7 @@ packages = [{include = "electronics_shop_project"}]
 [tool.poetry.dependencies]
 python = "^3.10"
 pytest = "^7.4.4"
+chardet = "^5.2.0"
 
 
 [tool.poetry.group.dev.dependencies]
