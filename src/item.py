@@ -1,5 +1,6 @@
 import csv
 import os.path
+from phone import Phone
 
 
 class Item:
@@ -8,7 +9,6 @@ class Item:
     """
     pay_rate = 1.0
     all = []
-
 
     def __init__(self, name: str, price: float, quantity: int) -> None:
         """
@@ -22,7 +22,6 @@ class Item:
         self.price = int(price)
         self.quantity = int(quantity)
 
-
     def calculate_total_price(self) -> float:
         """
         Рассчитывает общую стоимость конкретного товара в магазине.
@@ -31,14 +30,12 @@ class Item:
         """
         return self.price * self.quantity
 
-
     def apply_discount(self) -> None:
         """
         Применяет установленную скидку для конкретного товара.
         """
         self.price *= self.pay_rate
         return self.price
-
 
     @property
     def name(self):
@@ -51,7 +48,6 @@ class Item:
         else:
             self.__name = new_name
 
-
     @classmethod
     def instantiate_from_csv(cls, file_path):
         new_path = os.path.abspath(file_path)
@@ -61,15 +57,19 @@ class Item:
                 item1 = Item(item['name'], item['price'], item['quantity'])
                 item1.all.append(item1)
 
-
     @staticmethod
     def string_to_number(string):
         return int(float(string))
 
-
     def __repr__(self):
         return f"{self.__class__.__name__}('{self.name}', {self.price}, {self.quantity})"
 
-
     def __str__(self):
         return f'{self.name}'
+
+    def __add__(self, other):
+        if not issubclass(other, Item):
+            print(type(other))
+            raise ValueError('Складывать можно только объекты Item и дочерние от них.')
+        #print(type(other))
+        return self.quantity + other.quantity
