@@ -1,6 +1,7 @@
 import csv
 import os.path
-from phone import Phone
+
+
 
 
 class Item:
@@ -68,8 +69,4 @@ class Item:
         return f'{self.name}'
 
     def __add__(self, other):
-        if not issubclass(other, Item):
-            print(type(other))
-            raise ValueError('Складывать можно только объекты Item и дочерние от них.')
-        #print(type(other))
         return self.quantity + other.quantity
