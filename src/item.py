@@ -3,7 +3,6 @@ import os.path
 
 
 
-
 class Item:
     """
     Класс для представления товара в магазине.
@@ -69,4 +68,6 @@ class Item:
         return f'{self.name}'
 
     def __add__(self, other):
-        return self.quantity + other.quantity
+        if other.__class__.__name__ in ('Item', 'Phone'):
+            return self.quantity + other.quantity
+        raise TypeError("Складывать можно только объекты классов с родительским классом Item")

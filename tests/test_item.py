@@ -1,6 +1,8 @@
 """Здесь надо написать тесты с использованием pytest для модуля item."""
-from src.item import Item
+import pytest
 
+from src.item import Item
+from src.phone import Phone
 
 item1 = Item('PC', 2000, 5)
 Item.pay_rate = 0.5
@@ -20,6 +22,7 @@ def test_name():
     assert item1.name == 'Клавиатура'
     item1.name = '01234567890'
     assert item1.name == '0123456789'
+    item1.name = 'PC'
 
 
 def test_instantiate_from_csv():
@@ -33,12 +36,21 @@ def test_string_to_number():
     assert Item.string_to_number('5.5') == 5
 
 
-#item1 = Item("Смартфон", 10000, 20)
 
 
 def test_repr():
+    item1 = Item('PC', 2000, 5)
     assert repr(item1) == "Item('PC', 2000, 5)"
 
 
 def test_str():
     assert str(item1) == 'PC'
+
+
+def test_add():
+    phone1 = Phone("iPhone 14", 120_000, 5, 2)
+    item1 = Item("Смартфон", 10000, 20)
+    assert item1 + phone1 == 25
+    assert phone1 + phone1 == 10
+    with pytest.raises(TypeError):
+        item1 + 5
