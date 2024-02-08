@@ -68,6 +68,6 @@ class Item:
         return f'{self.name}'
 
     def __add__(self, other):
-        if other.__class__.__name__ in ('Item', 'Phone'):
+        if isinstance(other, Item):
             return self.quantity + other.quantity
         raise TypeError("Складывать можно только объекты классов с родительским классом Item")

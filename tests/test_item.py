@@ -52,5 +52,8 @@ def test_add():
     item1 = Item("Смартфон", 10000, 20)
     assert item1 + phone1 == 25
     assert phone1 + phone1 == 10
+
+
+def test_add_raise_TypeError():
     with pytest.raises(TypeError):
         item1 + 5
