@@ -50,13 +50,20 @@ class Item:
             self.__name = new_name
 
     @classmethod
-    def instantiate_from_csv(cls, file_path):
+    def instantiate_from_csv(cls, file_path='somefile'):
         new_path = os.path.abspath(file_path)
-        with open((new_path), 'r', encoding="cp1251") as file:
-            csv_dict = csv.DictReader(file)
-            for item in csv_dict:
-                item1 = Item(item['name'], item['price'], item['quantity'])
-                item1.all.append(item1)
+        try:
+            with open((new_path), 'r', encoding="cp1251") as file:
+                csv_dict = csv.DictReader(file)
+                for item in csv_dict:
+                    item1 = Item(item['name'], item['price'], item['quantity'])
+                    item1.all.append(item1)
+
+        except FileNotFoundError:
+            raise FileNotFoundError('Отсутствует файл item.csv')
+
+        except KeyError:
+            raise InstantiateCSVError
 
     @staticmethod
     def string_to_number(string):
@@ -72,3 +79,14 @@ class Item:
         if isinstance(other, Item):
             return self.quantity + other.quantity
         raise TypeError("Складывать можно только объекты классов с родительским классом Item")
+
+
+
+class InstantiateCSVError(Exception):
+
+    def __init__(self, *args, **kwargs):
+        self.message = args[0] if args else 'Файл item.csv поврежден'
+
+
+    def __str__(self):
+        return self.message
