@@ -1,7 +1,7 @@
 """Здесь надо написать тесты с использованием pytest для модуля item."""
 import pytest
 
-from src.item import Item
+from src.item import Item, InstantiateCSVError
 from src.phone import Phone
 
 item1 = Item('PC', 2000, 5)
@@ -28,6 +28,10 @@ def test_name():
 def test_instantiate_from_csv():
     item1.instantiate_from_csv('../src/items.csv')
     assert len(item1.all) == 5
+    with pytest.raises(FileNotFoundError):
+        item1.instantiate_from_csv()
+    with pytest.raises(InstantiateCSVError):
+        item1.instantiate_from_csv('../src/items1.csv')
 
 
 def test_string_to_number():
@@ -57,3 +61,4 @@ def test_add():
 def test_add_raise_TypeError():
     with pytest.raises(TypeError):
         item1 + 5
+
